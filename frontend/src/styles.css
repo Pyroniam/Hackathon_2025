@@ -1,0 +1,233 @@
+/* styles.css */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+.finance-app {
+  display: flex;
+  height: 100vh;
+}
+
+.chat-section {
+  width: 50%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 2rem;
+}
+
+.chat-message {
+  margin-bottom: 1.5rem;
+}
+
+.chat-message-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message-header .dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #8b5cf6;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.chat-message-header .time {
+  color: #a78bfa;
+  font-size: 0.875rem;
+}
+
+.chat-bubble {
+  background-color: #374151;
+  color: white;
+  padding: 1rem;
+  border-radius: 9999px;
+  max-width: 80%;
+  margin-bottom: 0.5rem;
+}
+
+.chat-bubble.user {
+  background-color: #4f46e5;
+}
+
+.chat-input {
+  margin-bottom: 1rem;
+  max-width: 90%;
+  position: relative;
+}
+
+.chat-input input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: white;
+  color: black;
+  max-width: 100%;
+  padding-right: 3rem;
+}
+
+.chat-input button {
+  position: absolute;
+  right: -3.5rem;
+  top: 75%;
+  transform: translateY(-55%);
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.transactions-section {
+  width: 50%;
+  background-color: #1f2937;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.connect-button-container {
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.connect-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.connect-button:hover {
+  background-color: #2563eb;
+}
+
+.connect-button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.year-dropdown {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.year-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #374151;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.year-dropdown-header span {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.year-dropdown-list {
+  position: absolute;
+  width: 100%;
+  background-color: #4b5563;
+  margin-top: 0.25rem;
+  border-radius: 0.5rem;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.year-dropdown-list div {
+  padding: 0.75rem;
+  cursor: pointer;
+}
+
+.year-dropdown-list div:hover {
+  background-color: #6b7280;
+}
+
+.month-transactions {
+  margin-bottom: 1.5rem;
+}
+
+.month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #374151;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.month-header-left {
+  font-size: 1.25rem;
+}
+
+.month-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Add space between total and arrow */
+}
+
+.month-header-right svg {
+  transition: transform 0.2s;
+}
+
+.transaction-table {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+.transaction-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 0.5rem;
+  background-color: #374151;
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.transaction-row div {
+  display: flex;
+  align-items: center;
+}
+
+.user-profile {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.user-profile div {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
