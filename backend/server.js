@@ -144,19 +144,19 @@ const financialPrompts = JSON.parse(
   fs.readFileSync(path.join(__dirname, "datasets", "financial_prompts.json"))
 );
 
-const isGreeting = (query) => {
-  const greetings = [
-    "hello",
-    "hi",
-    "hey",
-    "good morning",
-    "good afternoon",
-    "good evening",
-    "howdy",
-    "greetings",
-  ];
-  return greetings.some((greeting) => query.toLowerCase().includes(greeting));
-};
+// const isGreeting = (query) => {
+//   const greetings = [
+//     "hello",
+//     "hi",
+//     "hey",
+//     "good morning",
+//     "good afternoon",
+//     "good evening",
+//     "howdy",
+//     "greetings",
+//   ];
+//   return greetings.some((greeting) => query.toLowerCase().includes(greeting));
+// };
 
 // Preprocess financial data for Gemini
 const preprocessFinancialData = (financialData) => {
@@ -199,12 +199,12 @@ const preprocessFinancialData = (financialData) => {
 app.post("/api/chat", async (req, res) => {
   const { query, access_token } = req.body;
 
-  if (isGreeting(query)) {
-    return res.json({
-      response:
-        "Hi there! How can I assist you with your financial goals today?",
-    });
-  }
+  // if (isGreeting(query)) {
+  //   return res.json({
+  //     response:
+  //       "Hi there! How can I assist you with your financial goals today?",
+  //   });
+  // }
 
   let financialData = null;
   if (access_token) {
@@ -256,7 +256,7 @@ app.post("/api/chat", async (req, res) => {
   if (responseText === "No relevant financial advice available.") {
     try {
       const geminiPrompt = `
-        You are a financial advisor. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance. Respond without the use of textile markup language. If the user greets you, act enthusiastic to help. As an introduction, speak concisely and very short.
+        You are a financial advisor named Profit Prophet. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance. Respond without the use of textile markup language. If the user greets you, act enthusiastic to help. As an introduction speak concisely and very short.
 
         The following is a financial query:
         "${query}"

@@ -3,7 +3,6 @@ import { usePlaidLink } from "react-plaid-link";
 import axios from "axios";
 import {
   Send,
-  User,
   ChevronDown,
   ChevronUp,
   ArrowLeft,
@@ -123,10 +122,14 @@ const PlaidIntegration = () => {
       }
 
       if (!grouped[year][month][category]) {
-        grouped[year][month][category] = 0;
+        grouped[year][month][category] = {
+          total: 0,
+          transactions: [],
+        };
       }
 
-      grouped[year][month][category] += Math.abs(Number(transaction.amount)); // Use absolute value for spending
+      grouped[year][month][category].total += Math.abs(Number(transaction.amount)); // Use absolute value for spending
+      grouped[year][month][category].transactions.push(transaction);
     });
 
     return grouped;
@@ -139,7 +142,7 @@ const PlaidIntegration = () => {
     Object.keys(groupedTransactions[year]).map((month) => ({
       name: `${month} ${year}`,
       total: Object.values(groupedTransactions[year][month]).reduce(
-        (sum, amount) => sum + amount,
+        (sum, category) => sum + category.total,
         0
       ),
     }))
@@ -149,7 +152,10 @@ const PlaidIntegration = () => {
   const categoryChartData = Object.keys(groupedTransactions).flatMap((year) =>
     Object.keys(groupedTransactions[year]).map((month) => ({
       name: `${month} ${year}`,
-      ...groupedTransactions[year][month], // Spread category totals
+      ...Object.keys(groupedTransactions[year][month]).reduce((acc, category) => {
+        acc[category] = groupedTransactions[year][month][category].total;
+        return acc;
+      }, {}),
     }))
   );
 
@@ -268,56 +274,82 @@ const PlaidIntegration = () => {
 
         {/* Transaction List */}
         {accessToken && (
-          <div className="transactions-container">
-            {Object.keys(groupedTransactions).map((year) => (
-              <div key={year}>
-                <h3 className="year-header">{year}</h3>
-                {Object.keys(groupedTransactions[year]).map((month, index) => (
-                  <div key={index} className="month-transactions">
-                    <div
-                      className="month-header"
-                      onClick={() =>
-                        setExpandedMonths((prev) => ({
-                          ...prev,
-                          [month]: !prev[month],
-                        }))
-                      }
-                    >
-                      <span>{month}</span>
-                      <span>
-                        Total: $
-                        {Object.values(groupedTransactions[year][month])
-                          .reduce((sum, amount) => sum + amount, 0)
-                          .toFixed(2)}
-                      </span>
-                    </div>
-
-                    {expandedMonths[month] && (
-                      <div className="transaction-list">
-                        <div className="transaction-row">
-                          <div>Category</div>
-                          <div>Amount</div>
-                        </div>
-                        {Object.keys(groupedTransactions[year][month]).map(
-                          (category, tIndex) => (
-                            <div key={tIndex} className="transaction-row">
-                              <div>{category}</div>
-                              <div>
-                                $
-                                {groupedTransactions[year][month][
-                                  category
-                                ].toFixed(2)}
-                              </div>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
+         <div className="transactions-container">
+         {Object.keys(groupedTransactions).map((year) => (
+           <div key={year}>
+             <h3 className="year-header">{year}</h3>
+             {Object.keys(groupedTransactions[year]).map((month, index) => (
+               <div key={index} className="month-transactions">
+                 <div
+                   className="month-header"
+                   onClick={() =>
+                     setExpandedMonths((prev) => ({
+                       ...prev,
+                       [month]: !prev[month],
+                     }))
+                   }
+                 >
+                   <span>{month}</span>
+                   <span>
+                     Total: $
+                     {Object.values(groupedTransactions[year][month])
+                       .reduce((sum, category) => sum + category.total, 0)
+                       .toFixed(2)}
+                   </span>
+                 </div>
+       
+                 {expandedMonths[month] && (
+                   <div className="transaction-list">
+                     <div className="transaction-row header-row">
+                       <div>Category</div>
+                       <div>Total</div>
+                       <div>Transaction</div>
+                       <div>Date</div>
+                       <div>Amount</div>
+                     </div>
+                     {Object.keys(groupedTransactions[year][month]).map(
+                       (category, tIndex) => (
+                         <React.Fragment key={tIndex}>
+                           {groupedTransactions[year][month][category].transactions.map(
+                             (transaction, trIndex) => (
+                               <div key={trIndex} className="transaction-row">
+                                 {/* Show category and total only for the first transaction in the category */}
+                                 {trIndex === 0 && (
+                                   <>
+                                     <div>{category}</div>
+                                     <div>
+                                       $
+                                       {groupedTransactions[year][month][category].total.toFixed(2)}
+                                     </div>
+                                   </>
+                                 )}
+                                 {/* For subsequent transactions, leave the category and total cells empty */}
+                                 {trIndex !== 0 && (
+                                   <>
+                                     <div></div>
+                                     <div></div>
+                                   </>
+                                 )}
+                                 <div>{transaction.name}</div>
+                                 <div>
+                                   {transaction.date
+                                     ? new Date(transaction.date).toDateString()
+                                     : "Invalid Date"}
+                                 </div>
+                                 <div>${Math.abs(transaction.amount).toFixed(2)}</div>
+                               </div>
+                             )
+                           )}
+                         </React.Fragment>
+                       )
+                     )}
+                   </div>
+                 )}
+               </div>
+             ))}
+           </div>
+         ))}
+       </div>
         )}
       </div>
 

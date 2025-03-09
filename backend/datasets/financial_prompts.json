@@ -1,34 +1,318 @@
 [
-    {
-      "input": "How can I reduce monthly expenses?",
-      "output": "To reduce your monthly expenses, consider evaluating your subscription services, cutting back on dining out, and reducing energy consumption."
-    },
-    {
-      "input": "What are the best ways to save for retirement?",
-      "output": "To save for retirement, consider contributing to a 401(k) or IRA, automating your contributions, and investing in low-cost index funds."
-    },
-    {
-      "input": "What stocks should I invest in?",
-      "output": "Diversify your investments by considering large-cap stocks for stability and tech stocks for growth potential. Always do your research before investing."
-    },
-    {
-      "input": "How do I create a budget?",
-      "output": "Start by tracking your income and expenses, categorize your spending, and create a spending limit for each category to help you save."
-    },
-    {
-      "input": "How can I improve my credit score?",
-      "output": "You can improve your credit score by paying your bills on time, reducing your debt-to-credit ratio, and checking your credit report regularly for errors."
-    },
-    {
-      "input": "What is the best way to pay off credit card debt?",
-      "output": "Pay off high-interest debt first, consider transferring balances to a lower-interest card, and avoid accumulating more debt while you pay it off."
-    },
-    {
-      "input": "How can I save for a house deposit?",
-      "output": "Open a high-yield savings account, automate monthly deposits, and consider cutting back on discretionary spending to boost your savings."
-    },
-    {
-      "input": "What is financial independence?",
-      "output": "Financial independence means having enough income to cover your living expenses without relying on a traditional job. This can be achieved through saving, investing, and living below your means."
-    }
-  ]
+  {
+    "input": "How can I start investing with a small amount of money?",
+    "output": "You can start investing with a small amount by using micro-investing apps, investing in fractional shares, or contributing to a low-cost index fund."
+  },
+  {
+    "input": "What are the benefits of a high-yield savings account?",
+    "output": "A high-yield savings account offers higher interest rates than traditional savings accounts, helping your money grow faster while keeping it accessible."
+  },
+  {
+    "input": "How do I choose the right credit card?",
+    "output": "Choose a credit card based on your spending habits. Look for low interest rates, rewards programs, and no annual fees if you plan to pay off your balance monthly."
+  },
+  {
+    "input": "What is compound interest?",
+    "output": "Compound interest is the interest earned on both the initial principal and the accumulated interest from previous periods. It helps your savings grow exponentially over time."
+  },
+  {
+    "input": "How can I save money on groceries?",
+    "output": "To save money on groceries, plan your meals, use coupons, buy in bulk, and shop at discount stores or during sales."
+  },
+  {
+    "input": "What is the 50/30/20 budgeting rule?",
+    "output": "The 50/30/20 rule suggests allocating 50% of your income to needs, 30% to wants, and 20% to savings and debt repayment."
+  },
+  {
+    "input": "How can I reduce my student loan payments?",
+    "output": "You can reduce your student loan payments by refinancing at a lower interest rate, enrolling in an income-driven repayment plan, or making extra payments when possible."
+  },
+  {
+    "input": "What is the difference between a Roth IRA and a traditional IRA?",
+    "output": "A Roth IRA is funded with after-tax dollars, and withdrawals in retirement are tax-free. A traditional IRA is funded with pre-tax dollars, and withdrawals are taxed in retirement."
+  },
+  {
+    "input": "How can I protect myself from identity theft?",
+    "output": "Protect yourself from identity theft by using strong passwords, monitoring your credit reports, and avoiding sharing sensitive information online."
+  },
+  {
+    "input": "What is the best way to save for my child's education?",
+    "output": "Consider opening a 529 savings plan, which offers tax advantages for education expenses. You can also explore scholarships, grants, and education savings accounts."
+  },
+  {
+    "input": "How do I calculate my net worth?",
+    "output": "Calculate your net worth by subtracting your total liabilities (debts) from your total assets (savings, investments, property, etc.)."
+  },
+  {
+    "input": "What is the difference between a stock and a bond?",
+    "output": "A stock represents ownership in a company and offers potential for growth, while a bond is a loan to a company or government that pays fixed interest over time."
+  },
+  {
+    "input": "How can I save for a vacation?",
+    "output": "Set a budget for your vacation, automate savings into a dedicated account, and look for ways to cut back on discretionary spending to fund your trip."
+  },
+  {
+    "input": "What is the best way to manage multiple debts?",
+    "output": "Use the debt snowball method (pay off the smallest debt first) or the debt avalanche method (pay off the highest-interest debt first) to manage multiple debts effectively."
+  },
+  {
+    "input": "How can I save money on utilities?",
+    "output": "Save money on utilities by using energy-efficient appliances, turning off lights when not in use, and adjusting your thermostat to reduce heating and cooling costs."
+  },
+  {
+    "input": "What is the difference between a fixed-rate and variable-rate mortgage?",
+    "output": "A fixed-rate mortgage has a constant interest rate and monthly payment, while a variable-rate mortgage has an interest rate that can change over time, affecting your payments."
+  },
+  {
+    "input": "How can I start a side hustle to earn extra income?",
+    "output": "Identify your skills and interests, explore freelance opportunities, or start a small business. Popular side hustles include tutoring, freelancing, and selling handmade goods."
+  },
+  {
+    "input": "What is the best way to save for an emergency fund?",
+    "output": "Start by setting a goal (e.g., 3-6 months of living expenses), automate monthly contributions, and keep the fund in a high-yield savings account for easy access."
+  },
+  {
+    "input": "How can I avoid overspending during the holidays?",
+    "output": "Set a budget for gifts and festivities, make a list of recipients and gift ideas, and avoid impulse purchases by sticking to your plan."
+  },
+  {
+    "input": "What is the difference between a mutual fund and an ETF?",
+    "output": "A mutual fund is a pooled investment managed by professionals, while an ETF (exchange-traded fund) is traded on stock exchanges and typically has lower fees."
+  },
+  {
+    "input": "How can I save money on car insurance?",
+    "output": "Shop around for quotes, bundle your insurance policies, maintain a good driving record, and consider raising your deductible to lower your premiums."
+  },
+  {
+    "input": "What is the best way to invest in real estate?",
+    "output": "You can invest in real estate by purchasing rental properties, investing in REITs (real estate investment trusts), or crowdfunding platforms."
+  },
+  {
+    "input": "How can I save money on taxes?",
+    "output": "Maximize your deductions, contribute to retirement accounts, and take advantage of tax credits. Consider consulting a tax professional for personalized advice."
+  },
+  {
+    "input": "What is the best way to save for a wedding?",
+    "output": "Set a budget, prioritize your expenses, and consider opening a dedicated savings account. Look for ways to cut costs, such as DIY decorations or a smaller guest list."
+  },
+  {
+    "input": "How can I save money on travel?",
+    "output": "Book flights and accommodations in advance, use travel rewards programs, and consider traveling during off-peak seasons to save money."
+  },
+  {
+    "input": "What is the best way to save for a car?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a used car or negotiating the price to save money."
+  },
+  {
+    "input": "How can I save money on healthcare?",
+    "output": "Use generic medications, take advantage of preventive care, and compare prices for medical services. Consider a high-deductible health plan with a health savings account (HSA)."
+  },
+  {
+    "input": "What is the best way to save for a down payment on a house?",
+    "output": "Set a savings goal, automate monthly contributions, and cut back on discretionary spending. Consider a high-yield savings account to grow your money faster."
+  },
+  {
+    "input": "How can I save money on entertainment?",
+    "output": "Look for free or low-cost activities, use streaming services instead of cable, and take advantage of discounts and promotions."
+  },
+  {
+    "input": "What is the best way to save for a child's college education?",
+    "output": "Open a 529 savings plan, contribute regularly, and explore scholarships and grants. Encourage your child to apply for financial aid and work part-time."
+  },
+  {
+    "input": "How can I save money on clothing?",
+    "output": "Shop during sales, buy second-hand, and avoid impulse purchases. Consider investing in high-quality, timeless pieces that last longer."
+  },
+  {
+    "input": "What is the best way to save for a big purchase?",
+    "output": "Set a savings goal, automate monthly contributions, and cut back on discretionary spending. Consider a high-yield savings account to grow your money faster."
+  },
+  {
+    "input": "How can I save money on transportation?",
+    "output": "Use public transportation, carpool, or bike to work. Maintain your vehicle to avoid costly repairs and consider downsizing to a more fuel-efficient car."
+  },
+  {
+    "input": "What is the best way to save for a dream vacation?",
+    "output": "Set a budget, automate monthly contributions, and look for ways to cut back on discretionary spending. Consider using travel rewards programs to save money."
+  },
+  {
+    "input": "How can I save money on home repairs?",
+    "output": "Learn basic DIY skills, compare quotes from contractors, and perform regular maintenance to avoid costly repairs."
+  },
+  {
+    "input": "What is the best way to save for a new phone?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on pet care?",
+    "output": "Buy pet food and supplies in bulk, groom your pet at home, and consider pet insurance to cover unexpected veterinary costs."
+  },
+  {
+    "input": "What is the best way to save for a new laptop?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on home insurance?",
+    "output": "Shop around for quotes, bundle your insurance policies, and consider raising your deductible to lower your premiums."
+  },
+  {
+    "input": "What is the best way to save for a new appliance?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying energy-efficient models to save on utility bills."
+  },
+  {
+    "input": "How can I save money on gym memberships?",
+    "output": "Look for discounts or promotions, consider a less expensive gym, or explore free workout options like running or home workouts."
+  },
+  {
+    "input": "What is the best way to save for a new car?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a used car or negotiating the price to save money."
+  },
+  {
+    "input": "How can I save money on home improvements?",
+    "output": "Plan your projects carefully, compare quotes from contractors, and consider DIY options for smaller tasks."
+  },
+  {
+    "input": "What is the best way to save for a new TV?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on subscriptions?",
+    "output": "Review your subscriptions regularly, cancel unused services, and look for bundled deals or family plans to save money."
+  },
+  {
+    "input": "What is the best way to save for a new bike?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a used bike or negotiating the price to save money."
+  },
+  {
+    "input": "How can I save money on furniture?",
+    "output": "Shop during sales, buy second-hand, and avoid impulse purchases. Consider DIY projects or upcycling old furniture."
+  },
+  {
+    "input": "What is the best way to save for a new camera?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on hobbies?",
+    "output": "Look for free or low-cost activities, buy used equipment, and take advantage of discounts and promotions."
+  },
+  {
+    "input": "What is the best way to save for a new gaming console?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on home decor?",
+    "output": "Shop during sales, buy second-hand, and avoid impulse purchases. Consider DIY projects or upcycling old items."
+  },
+  {
+    "input": "What is the best way to save for a new smartphone?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on beauty products?",
+    "output": "Look for sales or discounts, buy in bulk, and consider DIY alternatives for some products."
+  },
+  {
+    "input": "What is the best way to save for a new laptop?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on home maintenance?",
+    "output": "Learn basic DIY skills, perform regular maintenance, and compare quotes from contractors for larger projects."
+  },
+  {
+    "input": "What is the best way to save for a new tablet?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on pet food?",
+    "output": "Buy pet food in bulk, look for sales or discounts, and consider switching to a more affordable brand."
+  },
+  {
+    "input": "What is the best way to save for a new watch?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on home cleaning?",
+    "output": "Learn basic cleaning techniques, use affordable cleaning products, and consider DIY solutions for some tasks."
+  },
+  {
+    "input": "What is the best way to save for a new pair of shoes?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home security?",
+    "output": "Compare quotes from security companies, consider DIY security systems, and take advantage of discounts or promotions."
+  },
+  {
+    "input": "What is the best way to save for a new pair of headphones?",
+    "output": "Set a savings goal, automate monthly contributions, and consider buying a refurbished or older model to save money."
+  },
+  {
+    "input": "How can I save money on home heating?",
+    "output": "Use a programmable thermostat, insulate your home, and perform regular maintenance on your heating system to save money."
+  },
+  {
+    "input": "What is the best way to save for a new pair of sunglasses?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home cooling?",
+    "output": "Use a programmable thermostat, close curtains during the day, and perform regular maintenance on your cooling system to save money."
+  },
+  {
+    "input": "What is the best way to save for a new backpack?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home lighting?",
+    "output": "Switch to energy-efficient LED bulbs, use natural light when possible, and turn off lights when not in use."
+  },
+  {
+    "input": "What is the best way to save for a new pair of jeans?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home water usage?",
+    "output": "Fix leaks promptly, install water-efficient fixtures, and reduce water usage by taking shorter showers and using a dishwasher efficiently."
+  },
+  {
+    "input": "What is the best way to save for a new pair of sneakers?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home internet?",
+    "output": "Compare plans from different providers, bundle services, and negotiate with your current provider for a better rate."
+  },
+  {
+    "input": "What is the best way to save for a new pair of boots?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home phone service?",
+    "output": "Switch to a VoIP service, bundle with internet, or consider using a mobile phone instead of a landline."
+  },
+  {
+    "input": "What is the best way to save for a new pair of sandals?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home repairs?",
+    "output": "Learn basic DIY skills, compare quotes from contractors, and perform regular maintenance to avoid costly repairs."
+  },
+  {
+    "input": "What is the best way to save for a new pair of dress shoes?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home appliances?",
+    "output": "Buy energy-efficient models, look for sales or discounts, and consider buying refurbished or older models to save money."
+  },
+  {
+    "input": "What is the best way to save for a new pair of running shoes?",
+    "output": "Set a savings goal, automate monthly contributions, and look for sales or discounts. Consider buying second-hand or less expensive brands."
+  },
+  {
+    "input": "How can I save money on home maintenance?",
+    "output": "Learn basic DIY skills, perform regular maintenance, and compare quotes from contractors for larger projects."
+  }
+]
