@@ -136,6 +136,7 @@ const PlaidIntegration = () => {
       <ChevronDown size={14} className="sort-indicator" />
     );
   };
+
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -161,92 +162,91 @@ const PlaidIntegration = () => {
   };
 
   return (
-    <div className="finance-dashboard">
-  {/* Chatbot Section - Left */}
-  <div className="chat-section">
-    <h2 className="chat-title">Finance Advisor</h2>
-    <div className="chat-container">
-      {messages.map((msg, i) => (
-        <div key={i} className={msg.sender === "user" ? "message user" : "message bot"}>
-          <p className="message-text">{msg.text}</p>
-        </div>
-      ))}
-      {loading && <p className="loading-text">Typing...</p>}
-    </div>
-    {/* Input Field */}
-    <div className="chat-input">
-      <input
-        type="text"
-        className="chat-textbox"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-        placeholder="Type a message..."
-      />
-      <button className="send-button" onClick={sendMessage} disabled={loading}>
-        Send
-      </button>
-    </div>
-  </div>
-
-  {/* Transactions Section - Right */}
-  <div className="transactions-section">
-    <h2 className="transactions-title">Transaction Data</h2>
-    
-    {/* Connect Bank Account Button */}
-    <div className="connect-button-container">
-      <button
-        onClick={open}
-        disabled={!ready || !linkToken}
-        className="connect-button"
-      >
-        Connect Bank Account
-      </button>
-    </div>
-
-    {/* Transaction List */}
-    {accessToken && (
-      <div className="transactions-container">
-        {Object.keys(groupedTransactions).map((year) => (
-          <div key={year}>
-            <h3 className="year-header">{year}</h3>
-            {groupedTransactions[year].map((monthData, index) => (
-              <div key={index} className="month-transactions">
-                <div className="month-header" onClick={() => 
-                  setExpandedMonths((prev) => ({
-                    ...prev,
-                    [monthData.month]: !prev[monthData.month],
-                  }))
-                }>
-                  <span>{monthData.month}</span>
-                  <span>Total: ${monthData.total.toFixed(2)}</span>
-                </div>
-
-                {expandedMonths[monthData.month] && (
-                  <div className="transaction-list">
-                    {getSortedTransactions(monthData.transactions).map((transaction, tIndex) => (
-                      <div key={tIndex} className="transaction-row">
-                        <div>{transaction.name || "Unknown Transaction"}</div>
-                        <div>${(transaction.amount || 0).toFixed(2)}</div>
-                        <div>{transaction.date ? new Date(transaction.date).toDateString() : "Invalid Date"}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
+    <div className="finance-app">
+      {/* Chat Section - Left */}
+      <div className="chat-section">
+  <h2 className="chat-title">Finance Advisor</h2>
+  <div className="chat-content">
+    {messages.map((msg, i) => (
+      <div key={i} className={`chat-message ${msg.sender === "user" ? "user" : "bot"}`}>
+        <div className="chat-bubble">{msg.text}</div>
       </div>
-    )}
+    ))}
+    {loading && <p className="loading-text">Typing...</p>}
   </div>
-
-  {/* User Profile Icon */}
-  <div className="user-profile">
-    <User color="black" size={24} />
+  <div className="chat-input">
+    <input
+      type="text"
+      className="chat-textbox"
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+      placeholder="Type a message..."
+    />
+    <button className="send-button" onClick={sendMessage} disabled={loading}>
+      <Send size={16} />
+    </button>
   </div>
 </div>
 
+      {/* Transactions Section - Right */}
+      <div className="transactions-section">
+        
+        {/* Connect Bank Account Button */}
+        <div className="connect-button-container">
+          <button
+            onClick={open}
+            disabled={!ready || !linkToken}
+            className="connect-button"
+          >
+            Connect Bank Account
+          </button>
+        </div>
+
+        {/* Transaction List */}
+        {accessToken && (
+          <div className="transactions-container">
+            {Object.keys(groupedTransactions).map((year) => (
+              <div key={year}>
+                <h3 className="year-header">{year}</h3>
+                {groupedTransactions[year].map((monthData, index) => (
+                  <div key={index} className="month-transactions">
+                    <div className="month-header" onClick={() => 
+                      setExpandedMonths((prev) => ({
+                        ...prev,
+                        [monthData.month]: !prev[monthData.month],
+                      }))
+                    }>
+                      <span>{monthData.month}</span>
+                      <span>Total: ${monthData.total.toFixed(2)}</span>
+                    </div>
+
+                    {expandedMonths[monthData.month] && (
+                      <div className="transaction-list">
+                        <div className="transaction-row">
+                          <div>Name</div>
+                          <div>Amount</div>
+                          <div>Date</div>
+                        </div>
+                        {getSortedTransactions(monthData.transactions).map((transaction, tIndex) => (
+                          <div key={tIndex} className="transaction-row">
+                            <div>{transaction.name || "Unknown Transaction"}</div>
+                            <div>${(transaction.amount || 0).toFixed(2)}</div>
+                            <div>{transaction.date ? new Date(transaction.date).toDateString() : "Invalid Date"}</div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      
+    </div>
   );
 };
 

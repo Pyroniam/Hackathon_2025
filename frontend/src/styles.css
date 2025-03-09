@@ -1,267 +1,347 @@
-/* General Styles */
+/* styles.css */
+/* Base Styles */
 body {
+  background-color: #333;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #f5f5f5; /* Light background */
-  color: #333; /* Dark text */
+  padding: 0;
+  font-size: 14px; /* Reduced base font size */
 }
 
-.finance-dashboard {
+/* Finance App Container */
+.finance-app {
   display: flex;
   height: 100vh;
-  overflow: hidden;
+  gap: 16px; /* Reduced gap */
+  padding: 16px; /* Reduced padding */
+  background-color: #333;
 }
 
-/* Chat Section - Left */
+/* Bank Section (Right) */
+.transactions-section {
+  flex: 2; /* Takes up 2 parts of the available space */
+  background-color: #262626; /* Slightly lighter gray */
+  border-radius: 10px; /* Reduced border radius */
+  padding: 16px; /* Reduced padding */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #444; /* Subtle border for separation */
+}
+
+/* Chat Section */
 .chat-section {
-  width: 40%;
-  background-color: #ffffff; /* White background */
-  padding: 1.5rem;
+  flex: 1; /* Takes up 1 part of the available space */
+  background-color: #262626; /* Dark gray */
+  border-radius: 10px; /* Reduced border radius */
+  padding: 16px; /* Reduced padding */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333; /* Subtle border for separation */
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #e0e0e0; /* Subtle border */
+  height: 100%; /* Ensure the chat section takes full height */
 }
 
+/* Chat Title */
 .chat-title {
-  font-size: 1.5rem;
+  font-size: 20px; /* Reduced font size */
   font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.chat-container {
-  flex-grow: 1;
-  overflow-y: auto;
-  margin-bottom: 1.5rem;
-}
-
-.message {
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  max-width: 80%;
-}
-
-.message.user {
-  background-color: #3b82f6; /* Blue for user messages */
-  color: white;
-  margin-left: auto;
-}
-
-.message.bot {
-  background-color: #e0e0e0; /* Light gray for bot messages */
-  color: #333;
-  margin-right: auto;
-}
-
-.message-text {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.loading-text {
-  color: #666; /* Gray for loading text */
-  font-style: italic;
+  margin-bottom: 12px; /* Reduced margin */
+  color: #ffffff;
   text-align: center;
+  flex-shrink: 0; /* Prevent the title from shrinking */
 }
 
+
+/* Chat Messages */
+/* Chat Messages */
+.chat-content {
+  flex: 1; /* Take up remaining space */
+  overflow-y: auto; /* Allow scrolling only for messages */
+  padding-right: 8px; /* Reduced padding */
+  margin-bottom: 12px; /* Space between messages and input */
+}
+
+/* Chat Input */
 .chat-input {
+  flex-shrink: 0; /* Prevent the input from shrinking */
   display: flex;
-  gap: 0.5rem;
-  align-items: center;
+  gap: 8px; /* Reduced gap */
 }
 
-.chat-textbox {
-  flex-grow: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e0e0e0;
-  border-radius: 0.75rem;
-  background-color: #ffffff;
-  color: #333;
-  font-size: 0.9rem;
+
+/* Custom Scrollbar */
+.chat-content::-webkit-scrollbar {
+  width: 6px; /* Reduced scrollbar width */
 }
 
-.chat-textbox::placeholder {
-  color: #999; /* Placeholder text color */
+.chat-content::-webkit-scrollbar-track {
+  background: #333; /* Dark gray track */
+  border-radius: 4px; /* Rounded corners */
 }
 
-.send-button {
-  background-color: #3b82f6; /* Blue for send button */
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s;
+.chat-content::-webkit-scrollbar-thumb {
+  background: #555; /* Gray thumb */
+  border-radius: 4px; /* Rounded corners */
+  transition: background 0.3s ease; /* Smooth transition */
 }
 
-.send-button:hover {
-  background-color: #2563eb; /* Darker blue on hover */
+.chat-content::-webkit-scrollbar-thumb:hover {
+  background: #0d6efd; /* Blue thumb on hover */
 }
 
-.send-button:disabled {
-  background-color: #999; /* Gray when disabled */
-  cursor: not-allowed;
+/* Chat Bubbles */
+.chat-message {
+  margin-bottom: 12px; /* Reduced margin */
 }
 
-/* Transactions Section - Right */
-.transactions-section {
-  width: 60%;
-  background-color: #ffffff; /* White background */
-  padding: 1.5rem;
-  overflow-y: auto;
-}
-
-.transactions-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.connect-button-container {
-  margin-bottom: 1.5rem;
-}
-
-.connect-button {
-  width: 100%;
-  background-color: #3b82f6; /* Blue for connect button */
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: none;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.connect-button:hover {
-  background-color: #2563eb; /* Darker blue on hover */
-}
-
-.connect-button:disabled {
-  background-color: #999; /* Gray when disabled */
-  cursor: not-allowed;
-}
-
-.year-dropdown {
-  margin-bottom: 1.5rem;
+.chat-bubble {
+  padding: 10px 14px; /* Reduced padding */
+  border-radius: 10px; /* Reduced border radius */
+  background-color: #333;
+  color: #ffffff;
+  max-width: 70%;
   position: relative;
 }
 
-.year-dropdown-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5f5f5; /* Light gray for dropdown header */
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  color: #333;
+.chat-message.user .chat-bubble {
+  background-color: #0d6efd; /* Blue for user messages */
+  margin-left: auto;
 }
 
-.year-dropdown-header span {
-  font-size: 1rem;
-  font-weight: 500;
+.chat-message.bot .chat-bubble {
+  background-color: #444; /* Darker gray for bot messages */
 }
 
-.year-dropdown-list {
-  position: absolute;
-  width: 100%;
-  background-color: #ffffff; /* White for dropdown list */
-  margin-top: 0.5rem;
-  border-radius: 0.75rem;
-  z-index: 10;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+.chat-textbox {
+  flex: 1;
+  padding: 8px; /* Reduced padding */
+  border-radius: 6px; /* Reduced border radius */
+  border: 1px solid #444;
+  background-color: #262626;
+  color: #ffffff;
+  font-size: 14px; /* Reduced font size */
 }
 
-.year-dropdown-list div {
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  color: #333;
-}
 
-.year-dropdown-list div:hover {
-  background-color: #f5f5f5; /* Light gray on hover */
-}
-
-.month-transactions {
-  margin-bottom: 1.5rem;
-}
-
-.month-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f5f5f5; /* Light gray for month header */
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  border-radius: 0.75rem;
-  color: #333;
-}
-
-.month-header-left {
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.month-header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.month-header-right svg {
-  transition: transform 0.2s;
-}
-
-.transaction-list {
-  background-color: #ffffff; /* White for transaction list */
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-}
-
-.transaction-row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 1rem;
-  padding: 0.75rem;
-  border-bottom: 1px solid #e0e0e0; /* Subtle border between rows */
-  color: #333;
-}
-
-.transaction-row:last-child {
-  border-bottom: none;
-}
-
-.transaction-row div {
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-/* User Profile Icon */
-.user-profile {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: #3b82f6; /* Blue for profile icon */
-  padding: 0.5rem;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.user-profile:hover {
-  background-color: #2563eb; /* Darker blue on hover */
-}
-
-.user-profile svg {
+.send-button {
+  background-color: #0d6efd;
   color: white;
+  border: none;
+  padding: 8px 16px; /* Reduced padding */
+  border-radius: 6px; /* Reduced border radius */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px; /* Reduced font size */
+}
+
+.send-button:hover {
+  background-color: #0b5ed7;
+}
+
+/* Transactions Section Styling */
+.connect-button-container {
+  margin-bottom: 16px; /* Reduced margin */
+}
+
+.connect-button {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Reduced padding */
+  border-radius: 6px; /* Reduced border radius */
+  cursor: pointer;
+  font-size: 14px; /* Reduced font size */
+  transition: all 0.3s ease;
+}
+
+.connect-button:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.connect-button:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+/* Transactions List */
+.transactions-container {
+  height: calc(100% - 80px); /* Adjusted height */
+  overflow-y: auto;
+  padding-right: 8px; /* Reduced padding */
+}
+
+/* Month Headers */
+.month-header {
+  background-color: #222; /* Dark gray background */
+  padding: 12px 16px; /* Reduced padding */
+  border-radius: 6px; /* Reduced border radius */
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  margin-bottom: 10px; /* Reduced margin */
+  border: 1px solid #444; /* Subtle border for separation */
+}
+
+.month-header:hover {
+  background-color: #444; /* Slightly lighter on hover */
+  border-color: #555; /* Change border color on hover */
+}
+
+/* Month Header Text */
+.month-header span {
+  font-size: 14px; /* Reduced font size */
+  font-weight: 500;
+  color: #ffffff;
+}
+
+/* Total Amount Styling */
+.month-header span:last-child {
+  color: #0d6efd; /* Blue color for the total amount */
+  font-weight: 600;
+}
+
+/* Expanded Transaction List */
+.transaction-list {
+  margin-top: 8px; /* Reduced margin */
+  padding: 10px; /* Reduced padding */
+  background-color: #262626; /* Darker background for the list */
+  border-radius: 6px; /* Reduced border radius */
+  border: 1px solid #333; /* Subtle border for separation */
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 8px; /* Reduced gap */
+}
+
+/* Transaction Row */
+.transaction-row {
+  display: flex;
+  justify-content: space-between; /* Space out items horizontally */
+  align-items: center;
+  background-color: #333; /* Dark gray background */
+  padding: 10px; /* Reduced padding */
+  border-radius: 6px; /* Reduced border radius */
+  border: 1px solid #444; /* Subtle border for separation */
+  transition: all 0.3s ease;
+}
+
+.transaction-row:hover {
+  background-color: #444; /* Slightly lighter on hover */
+  border-color: #555; /* Change border color on hover */
+}
+
+/* Transaction Details */
+.transaction-row div {
+  flex: 1; /* Each detail takes equal space */
+  text-align: left; /* Align text to the left */
+  font-size: 13px; /* Reduced font size */
+  color: #ffffff;
+}
+
+/* Transaction Name */
+.transaction-row div:first-child {
+  font-weight: 500; /* Bold for the transaction name */
+}
+
+/* Transaction Amount */
+.transaction-row div:nth-child(2) {
+  color: #0d6efd; /* Blue for the amount */
+  font-weight: 600;
+  text-align: center; /* Center-align the amount */
+}
+
+/* Transaction Date */
+.transaction-row div:last-child {
+  color: #aaa; /* Light gray for the date */
+  font-size: 12px; /* Reduced font size */
+  text-align: right; /* Right-align the date */
+}
+
+/* Loading Text */
+.loading-text {
+  color: #aaa;
+  font-style: italic;
+  font-size: 13px; /* Reduced font size */
+}
+
+/* Sort Indicators */
+.sort-indicator {
+  margin-left: 4px; /* Reduced margin */
+  cursor: pointer;
+  color: #0d6efd;
+  font-size: 12px; /* Reduced font size */
+}
+
+/* Auth Buttons Container */
+.auth-buttons-container {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  align-items: center;
+  padding: 16px; /* Reduced padding */
+  background-color: #262626; /* Dark gray background */
+  border-bottom: 1px solid #333; /* Subtle border for separation */
+}
+
+/* Signed-In Container */
+.signed-in-container {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Reduced gap */
+}
+
+/* Welcome Message */
+.welcome-message {
+  margin: 0;
+  font-size: 14px; /* Reduced font size */
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Auth Buttons */
+.auth-button {
+  padding: 8px 16px; /* Reduced padding */
+  border: none;
+  border-radius: 20px; /* Reduced border radius */
+  font-size: 13px; /* Reduced font size */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduced gap */
+}
+
+/* Login Button */
+.auth-button.login-button {
+  background-color: #0d6efd; /* Blue */
+  color: white;
+}
+
+.auth-button.login-button:hover {
+  background-color: #0b5ed7; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Logout Button */
+.auth-button.logout-button {
+  background-color: #333; /* Gray */
+  color: #ffffff;
+}
+
+.auth-button.logout-button:hover {
+  background-color: #0d6efd; /* Blue on hover */
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Styling (if you add icons) */
+.auth-button .icon {
+  width: 16px; /* Reduced icon size */
+  height: 16px; /* Reduced icon size */
 }
