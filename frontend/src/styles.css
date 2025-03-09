@@ -294,11 +294,11 @@ html {
   justify-content: space-between; /* Space out items horizontally */
   align-items: center;
   background-color: #333; /* Dark gray background */
-  padding: 10px; /* Reduced padding */
+  padding: 15px; /* Reduced padding */
+  margin: 10px;
   border-radius: 6px; /* Reduced border radius */
   border: 1px solid #444; /* Subtle border for separation */
   transition: all 0.3s ease;
-  padding: 8px 0;
 }
 
 .transaction-row:hover {
@@ -308,27 +308,35 @@ html {
 
 /* Transaction Details */
 .transaction-row div {
-  flex: 1; /* Each detail takes equal space */
   text-align: left; /* Align text to the left */
   font-size: 13px; /* Reduced font size */
   color: #ffffff;
 }
 
-/* Transaction Name */
+/* Transaction Category */
 .transaction-row div:first-child {
+  flex: 2; /* Each detail takes equal space */
   font-weight: 500; /* Bold for the transaction name */
 }
 
-/* Transaction Amount */
+/* Transaction Total */
 .transaction-row div:nth-child(2) {
+  flex: 1; /* Each detail takes equal space */
   color: #0d6efd; /* Blue for the amount */
   font-weight: 600;
-  text-align: center; /* Center-align the amount */
-  width: 20%;
+}
+
+.transaction-row div:nth-child(3) {
+  flex: 2; /* Each detail takes equal space */
+}
+
+.transaction-row div:nth-child(4) {
+  flex: 2; /* Each detail takes equal space */
 }
 
 /* Transaction Date */
 .transaction-row div:last-child {
+  flex: 1; /* Each detail takes equal space */
   color: #aaa; /* Light gray for the date */
   font-size: 12px; /* Reduced font size */
   text-align: right; /* Right-align the date */
