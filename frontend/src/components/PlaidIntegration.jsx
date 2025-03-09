@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import axios from "axios";
-import { Send, User, Clock, ChevronDown, ChevronUp } from "lucide-react";
+import { Send, User, ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 import "../styles.css"; // Import the CSS file
 
 const PlaidIntegration = () => {
@@ -13,9 +14,10 @@ const PlaidIntegration = () => {
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
-  const [expandedMonths, setExpandedMonths] = useState({}); // Track expanded months
+  const [expandedMonths, setExpandedMonths] = useState({});
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State for sidebar visibility
 
   // Fetch link token from backend
   useEffect(() => {
@@ -101,6 +103,14 @@ const PlaidIntegration = () => {
 
   const groupedTransactions = groupTransactionsByMonth();
 
+  // Prepare data for the bar chart
+  const chartData = Object.keys(groupedTransactions).flatMap((year) =>
+    groupedTransactions[year].map((monthData) => ({
+      name: `${monthData.month} ${year}`,
+      total: Math.abs(monthData.total), // Use absolute value for spending
+    }))
+  );
+
   // Function to handle sorting
   const requestSort = (key) => {
     let direction = "ascending";
@@ -165,33 +175,32 @@ const PlaidIntegration = () => {
     <div className="finance-app">
       {/* Chat Section - Left */}
       <div className="chat-section">
-  <h2 className="chat-title">Finance Advisor</h2>
-  <div className="chat-content">
-    {messages.map((msg, i) => (
-      <div key={i} className={`chat-message ${msg.sender === "user" ? "user" : "bot"}`}>
-        <div className="chat-bubble">{msg.text}</div>
+        <h2 className="chat-title">Finance Advisor</h2>
+        <div className="chat-content">
+          {messages.map((msg, i) => (
+            <div key={i} className={`chat-message ${msg.sender === "user" ? "user" : "bot"}`}>
+              <div className="chat-bubble">{msg.text}</div>
+            </div>
+          ))}
+          {loading && <p className="loading-text">Typing...</p>}
+        </div>
+        <div className="chat-input">
+          <input
+            type="text"
+            className="chat-textbox"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+            placeholder="Type a message..."
+          />
+          <button className="send-button" onClick={sendMessage} disabled={loading}>
+            <Send size={16} />
+          </button>
+        </div>
       </div>
-    ))}
-    {loading && <p className="loading-text">Typing...</p>}
-  </div>
-  <div className="chat-input">
-    <input
-      type="text"
-      className="chat-textbox"
-      value={input}
-      onChange={(e) => setInput(e.target.value)}
-      onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-      placeholder="Type a message..."
-    />
-    <button className="send-button" onClick={sendMessage} disabled={loading}>
-      <Send size={16} />
-    </button>
-  </div>
-</div>
 
-      {/* Transactions Section - Right */}
+      {/* Transactions Section - Middle */}
       <div className="transactions-section">
-        
         {/* Connect Bank Account Button */}
         <div className="connect-button-container">
           <button
@@ -245,7 +254,31 @@ const PlaidIntegration = () => {
         )}
       </div>
 
-      
+      {/* Sidebar Toggle Button */}
+      <button
+  className="sidebar-toggle"
+  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+>
+  {isSidebarOpen ? <ArrowRight size={20} /> : <ArrowLeft size={20} />}
+</button>
+
+      {/* Chart Sidebar - Right */}
+      <div className={`chart-sidebar ${isSidebarOpen ? "open" : ""}`}>
+        <h3>Monthly Spending</h3>
+        {accessToken && chartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="total" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <p>No transaction data available.</p>
+        )}
+      </div>
     </div>
   );
 };

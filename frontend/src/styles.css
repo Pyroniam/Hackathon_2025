@@ -413,3 +413,49 @@ body {
   width: 16px; /* Reduced icon size */
   height: 16px; /* Reduced icon size */
 }
+/* Sidebar Toggle Button */
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+  border-radius: 8px 0 0 8px;
+  opacity: 0.5; /* Make the button semi-transparent when closed */
+  transition: opacity 0.3s ease-in-out, right 0.3s ease-in-out;
+}
+
+.sidebar-toggle:hover {
+  opacity: 1; /* Make the button fully visible on hover */
+}
+
+/* Chart Sidebar - Right */
+.chart-sidebar {
+  position: fixed;
+  right: -300px; /* Hide sidebar by default */
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+  transition: right 0.3s ease-in-out;
+  z-index: 999;
+}
+
+.chart-sidebar.open {
+  right: 0; /* Show sidebar when open */
+}
+
+.chart-sidebar h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: black;
+}
