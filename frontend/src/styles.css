@@ -138,22 +138,26 @@ html {
 }
 
 /* Custom Scrollbar */
-.chat-content::-webkit-scrollbar {
+.chat-content::-webkit-scrollbar,
+.transactions-container::-webkit-scrollbar {
   width: 6px; /* Reduced scrollbar width */
 }
 
-.chat-content::-webkit-scrollbar-track {
+.chat-content::-webkit-scrollbar-track,
+.transactions-container::-webkit-scrollbar-track {
   background: #333; /* Dark gray track */
   border-radius: 4px; /* Rounded corners */
 }
 
-.chat-content::-webkit-scrollbar-thumb {
+.chat-content::-webkit-scrollbar-thumb,
+.transactions-container::-webkit-scrollbar-thumb {
   background: #555; /* Gray thumb */
   border-radius: 4px; /* Rounded corners */
   transition: background 0.3s ease; /* Smooth transition */
 }
 
-.chat-content::-webkit-scrollbar-thumb:hover {
+.chat-content::-webkit-scrollbar-thumb:hover,
+.transactions-container::-webkit-scrollbar-thumb:hover {
   background: #0d6efd; /* Blue thumb on hover */
 }
 
