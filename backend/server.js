@@ -1,4 +1,4 @@
-const connectDB = require("./config/mongodb")
+const connectDB = require("./config/mongodb");
 const express = require("express");
 const cors = require("cors");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
@@ -122,45 +122,91 @@ app.post("/api/income", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch income data" });
   }
 });
+
 const financialPrompts = JSON.parse(
   fs.readFileSync(path.join(__dirname, "datasets", "financial_prompts.json"))
 );
 
+const isGreeting = (query) => {
+  const greetings = ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "howdy", "greetings"];
+  return greetings.some(greeting => query.toLowerCase().includes(greeting));
+};
+
+// Preprocess financial data for Gemini
+const preprocessFinancialData = (financialData) => {
+  const accounts = financialData.accounts.map((account) => ({
+    account_id: account.account_id,
+    name: account.name,
+    official_name: account.official_name,
+    type: account.type,
+    subtype: account.subtype,
+    balance_available: account.balances.available,
+    balance_current: account.balances.current,
+    currency: account.balances.iso_currency_code,
+  }));
+
+  const transactions = financialData.transactions.map((transaction) => ({
+    transaction_id: transaction.transaction_id,
+    account_id: transaction.account_id,
+    date: transaction.date,
+    amount: transaction.amount,
+    currency: transaction.iso_currency_code,
+    category: transaction.category ? transaction.category.join(" > ") : "Uncategorized",
+    merchant_name: transaction.merchant_name || "Unknown",
+    payment_channel: transaction.payment_channel,
+    pending: transaction.pending,
+  }));
+
+  const income = financialData.income.map((tx) => ({
+    transaction_id: tx.transaction_id,
+    date: tx.date,
+    amount: tx.amount,
+    source: tx.name || "Unknown",
+  }));
+
+  return { accounts, transactions, income };
+};
+
 app.post("/api/chat", async (req, res) => {
   const { query, access_token } = req.body;
 
-  console.log(access_token);
-  let financialData = {};
-  if(access_token){
-  try {
-    const [accounts, transactions, income] = await Promise.all([
-      plaidClient.accountsGet({ access_token }),
-      plaidClient.transactionsGet({
-        access_token,
-        start_date: "2024-01-01",
-        end_date: new Date().toISOString().split("T")[0],
-      }),
-      plaidClient.transactionsGet({
-        access_token,
-        start_date: new Date(new Date().setDate(new Date().getDate() - 90)).toISOString().split("T")[0],
-        end_date: new Date().toISOString().split("T")[0],
-      }),
-    ]);
-
-    financialData = {
-      accounts: accounts.data.accounts,
-      transactions: transactions.data.transactions,
-      income: income.data.transactions.filter((tx) =>
-        tx.category && tx.category.includes("Payroll")
-      ),
-    };
-  } catch (error) {
-    console.error("❌ Error fetching financial data:", error);
-    return res.status(500).json({ error: "Failed to fetch financial data" });
+  if (isGreeting(query)) {
+    return res.json({ response: "Hi there! How can I assist you with your financial goals today?" });
   }
-}
 
- 
+  let financialData = {};
+  if (access_token) {
+    try {
+      const [accounts, transactions, income] = await Promise.all([
+        plaidClient.accountsGet({ access_token }),
+        plaidClient.transactionsGet({
+          access_token,
+          start_date: "2024-01-01",
+          end_date: new Date().toISOString().split("T")[0],
+        }),
+        plaidClient.transactionsGet({
+          access_token,
+          start_date: new Date(new Date().setDate(new Date().getDate() - 90)).toISOString().split("T")[0],
+          end_date: new Date().toISOString().split("T")[0],
+        }),
+      ]);
+
+      financialData = {
+        accounts: accounts.data.accounts,
+        transactions: transactions.data.transactions,
+        income: income.data.transactions.filter((tx) =>
+          tx.category && tx.category.includes("Payroll")
+        ),
+      };
+    } catch (error) {
+      console.error("❌ Error fetching financial data:", error);
+      return res.status(500).json({ error: "Failed to fetch financial data" });
+    }
+  }
+
+  // Preprocess financial data
+  const processedData = preprocessFinancialData(financialData);
+
   // Check if the query matches any financial context prompt
   let responseText = "No relevant financial advice available.";
   for (const prompt of financialPrompts) {
@@ -169,20 +215,25 @@ app.post("/api/chat", async (req, res) => {
       break;
     }
   }
+  console.log(JSON.stringify(processedData.accounts, null, 2));
+  console.log(JSON.stringify(processedData.transactions, null, 2));
+  console.log(JSON.stringify(processedData.income, null, 2));
 
   // Use Gemini if no direct match is found
   if (responseText === "No relevant financial advice available.") {
     try {
       const geminiPrompt = `
-        You are a financial advisor. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance.
+        You are a financial advisor. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance. Respond without the use of textile markup language. If the user greets you, act enthusiastic to help. As an introduction, speak concisely and very short.
+
         The following is a financial query:
         "${query}"
 
         Please provide your response focusing on financial topics.
-         Financial Data:
-        Accounts: ${JSON.stringify(financialData.accounts)}
-        Transactions: ${JSON.stringify(financialData.transactions)}
-        Income: ${JSON.stringify(financialData.income)}`;
+        Use the following financial data to inform your response:
+
+        Accounts: ${JSON.stringify(processedData.accounts, null, 2)}
+        Transactions: ${JSON.stringify(processedData.transactions, null, 2)}
+        Income: ${JSON.stringify(processedData.income, null, 2)}`;
 
       const geminiResponse = await axios.post(
         `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent`,
@@ -198,14 +249,13 @@ app.post("/api/chat", async (req, res) => {
             "Content-Type": "application/json",
           },
           params: {
-            key: process.env.GEMINI_API_KEY, 
+            key: process.env.GEMINI_API_KEY,
           },
         }
       );
 
       responseText =
         geminiResponse.data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from Gemini";
-      
     } catch (error) {
       console.error("Error:", error.message);
       if (error.response) {
