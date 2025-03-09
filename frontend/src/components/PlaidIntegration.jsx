@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
 import axios from "axios";
-import { Send, User, ChevronDown, ChevronUp, ArrowLeft, ArrowRight } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import {
+  Send,
+  User,
+  ChevronDown,
+  ChevronUp,
+  ArrowLeft,
+  ArrowRight,
+} from "lucide-react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 import "../styles.css"; // Import the CSS file
 
 const PlaidIntegration = () => {
@@ -11,9 +26,14 @@ const PlaidIntegration = () => {
   const [transactions, setTransactions] = useState([]);
   const [income, setIncome] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
+  const [selectedYear, setSelectedYear] = useState(
+    new Date().getFullYear().toString()
+  );
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
   const [expandedMonths, setExpandedMonths] = useState({});
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -23,7 +43,9 @@ const PlaidIntegration = () => {
   useEffect(() => {
     const fetchLinkToken = async () => {
       try {
-        const response = await axios.post("http://localhost:5001/api/create_link_token");
+        const response = await axios.post(
+          "http://localhost:5001/api/create_link_token"
+        );
         setLinkToken(response.data.link_token);
       } catch (error) {
         console.error("Error creating link token:", error);
@@ -38,7 +60,10 @@ const PlaidIntegration = () => {
     onSuccess: async (publicToken) => {
       try {
         setLoading(true);
-        const response = await axios.post("http://localhost:5001/api/exchange_public_token", { public_token: publicToken });
+        const response = await axios.post(
+          "http://localhost:5001/api/exchange_public_token",
+          { public_token: publicToken }
+        );
         setAccessToken(response.data.access_token);
         fetchBankData(response.data.access_token);
       } catch (error) {
@@ -55,11 +80,17 @@ const PlaidIntegration = () => {
       setLoading(true);
 
       // Fetch Transactions
-      const transactionResponse = await axios.post("http://localhost:5001/api/transactions", { access_token: token });
+      const transactionResponse = await axios.post(
+        "http://localhost:5001/api/transactions",
+        { access_token: token }
+      );
       setTransactions(transactionResponse.data.transactions || []);
 
       // Fetch Income
-      const incomeResponse = await axios.post("http://localhost:5001/api/income", { access_token: token });
+      const incomeResponse = await axios.post(
+        "http://localhost:5001/api/income",
+        { access_token: token }
+      );
       setIncome(incomeResponse.data.income || []);
     } catch (error) {
       console.error("❌ Error fetching financial data:", error);
@@ -73,7 +104,8 @@ const PlaidIntegration = () => {
     const grouped = {};
 
     transactions.forEach((transaction) => {
-      if (!transaction.date || !transaction.amount || !transaction.category) return;
+      if (!transaction.date || !transaction.amount || !transaction.category)
+        return;
 
       const date = new Date(transaction.date);
       if (isNaN(date)) return;
@@ -106,7 +138,10 @@ const PlaidIntegration = () => {
   const chartData = Object.keys(groupedTransactions).flatMap((year) =>
     Object.keys(groupedTransactions[year]).map((month) => ({
       name: `${month} ${year}`,
-      total: Object.values(groupedTransactions[year][month]).reduce((sum, amount) => sum + amount, 0),
+      total: Object.values(groupedTransactions[year][month]).reduce(
+        (sum, amount) => sum + amount,
+        0
+      ),
     }))
   );
 
@@ -164,28 +199,36 @@ const PlaidIntegration = () => {
 
     try {
       // Send the user query and access token to the backend for processing
-      const { data } = await axios.post("http://localhost:5001/api/chat", { 
-        query: input, 
-        access_token: accessToken // Include the access token here
+      const { data } = await axios.post("http://localhost:5001/api/chat", {
+        query: input,
+        access_token: accessToken, // Include the access token here
       });
 
       setMessages([...newMessages, { text: data.response, sender: "bot" }]);
     } catch (error) {
       console.error("Error:", error);
-      setMessages([...newMessages, { text: "Error fetching response", sender: "bot" }]);
+      setMessages([
+        ...newMessages,
+        { text: "Error fetching response", sender: "bot" },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="finance-app">
+    <div className={`finance-app ${isSidebarOpen ? "sidebar-open" : ""}`}>
       {/* Chat Section - Left */}
       <div className="chat-section">
         <h2 className="chat-title">Finance Advisor</h2>
         <div className="chat-content">
           {messages.map((msg, i) => (
-            <div key={i} className={`chat-message ${msg.sender === "user" ? "user" : "bot"}`}>
+            <div
+              key={i}
+              className={`chat-message ${
+                msg.sender === "user" ? "user" : "bot"
+              }`}
+            >
               <div className="chat-bubble">{msg.text}</div>
             </div>
           ))}
@@ -200,7 +243,11 @@ const PlaidIntegration = () => {
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder="Type a message..."
           />
-          <button className="send-button" onClick={sendMessage} disabled={loading}>
+          <button
+            className="send-button"
+            onClick={sendMessage}
+            disabled={loading}
+          >
             <Send size={16} />
           </button>
         </div>
@@ -227,14 +274,22 @@ const PlaidIntegration = () => {
                 <h3 className="year-header">{year}</h3>
                 {Object.keys(groupedTransactions[year]).map((month, index) => (
                   <div key={index} className="month-transactions">
-                    <div className="month-header" onClick={() => 
-                      setExpandedMonths((prev) => ({
-                        ...prev,
-                        [month]: !prev[month],
-                      }))
-                    }>
+                    <div
+                      className="month-header"
+                      onClick={() =>
+                        setExpandedMonths((prev) => ({
+                          ...prev,
+                          [month]: !prev[month],
+                        }))
+                      }
+                    >
                       <span>{month}</span>
-                      <span>Total: ${Object.values(groupedTransactions[year][month]).reduce((sum, amount) => sum + amount, 0).toFixed(2)}</span>
+                      <span>
+                        Total: $
+                        {Object.values(groupedTransactions[year][month])
+                          .reduce((sum, amount) => sum + amount, 0)
+                          .toFixed(2)}
+                      </span>
                     </div>
 
                     {expandedMonths[month] && (
@@ -243,12 +298,19 @@ const PlaidIntegration = () => {
                           <div>Category</div>
                           <div>Amount</div>
                         </div>
-                        {Object.keys(groupedTransactions[year][month]).map((category, tIndex) => (
-                          <div key={tIndex} className="transaction-row">
-                            <div>{category}</div>
-                            <div>${groupedTransactions[year][month][category].toFixed(2)}</div>
-                          </div>
-                        ))}
+                        {Object.keys(groupedTransactions[year][month]).map(
+                          (category, tIndex) => (
+                            <div key={tIndex} className="transaction-row">
+                              <div>{category}</div>
+                              <div>
+                                $
+                                {groupedTransactions[year][month][
+                                  category
+                                ].toFixed(2)}
+                              </div>
+                            </div>
+                          )
+                        )}
                       </div>
                     )}
                   </div>
@@ -261,7 +323,7 @@ const PlaidIntegration = () => {
 
       {/* Sidebar Toggle Button */}
       <button
-        className="sidebar-toggle"
+        className={`sidebar-toggle ${isSidebarOpen ? "open" : ""}`}
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? <ArrowRight size={20} /> : <ArrowLeft size={20} />}
@@ -269,9 +331,11 @@ const PlaidIntegration = () => {
 
       {/* Chart Sidebar - Right */}
       <div className={`chart-sidebar ${isSidebarOpen ? "open" : ""}`}>
-        <h3>Monthly Spending</h3>
+        <h3 className={`chart-headers ${isSidebarOpen ? "open" : ""}`}>
+          Monthly Spending
+        </h3>
         {accessToken && chartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height="40%">
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
@@ -284,9 +348,11 @@ const PlaidIntegration = () => {
           <p>No transaction data available.</p>
         )}
 
-        <h3>Spending by Category</h3>
+        <h3 className={`chart-headers ${isSidebarOpen ? "open" : ""}`}>
+          Spending by Category
+        </h3>
         {accessToken && categoryChartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height="40%">
             <BarChart data={categoryChartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
@@ -299,7 +365,9 @@ const PlaidIntegration = () => {
                     key={index}
                     dataKey={category}
                     stackId="a"
-                    fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`} // Random color for each category
+                    fill={`#${Math.floor(Math.random() * 16777215).toString(
+                      16
+                    )}`} // Random color for each category
                   />
                 ))}
             </BarChart>

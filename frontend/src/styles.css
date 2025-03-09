@@ -57,28 +57,38 @@
 /* styles.css */
 /* Base Styles */
 
-
-body {
+body,
+html {
   background-color: #333;
   color: #ffffff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Verdana;
   margin: 0;
   padding: 0;
-  font-size: 14px; /* Reduced base font size */
+  font-size: 16px; /* Reduced base font size */
 }
 
 /* Finance App Container */
 .finance-app {
   display: flex;
-  height: 100vh;
+  height: 75vh;
   gap: 16px; /* Reduced gap */
   padding: 16px; /* Reduced padding */
   background-color: #333;
 }
 
+.chart-headers.open {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.chart-headers {
+  display: none;
+}
+
 /* Bank Section (Right) */
 .transactions-section {
-  flex: 2; /* Takes up 2 parts of the available space */
+  flex: 4; /* Takes up 2 parts of the available space */
   background-color: #262626; /* Slightly lighter gray */
   border-radius: 10px; /* Reduced border radius */
   padding: 16px; /* Reduced padding */
@@ -88,7 +98,7 @@ body {
 
 /* Chat Section */
 .chat-section {
-  flex: 1; /* Takes up 1 part of the available space */
+  flex: 3; /* Takes up 1 part of the available space */
   background-color: #262626; /* Dark gray */
   border-radius: 10px; /* Reduced border radius */
   padding: 16px; /* Reduced padding */
@@ -98,18 +108,18 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%; /* Ensure the chat section takes full height */
+  width: 40%;
 }
 
 /* Chat Title */
 .chat-title {
-  font-size: 20px; /* Reduced font size */
+  font-size: 32px; /* Reduced font size */
   font-weight: 600;
   margin-bottom: 12px; /* Reduced margin */
   color: #ffffff;
   text-align: center;
   flex-shrink: 0; /* Prevent the title from shrinking */
 }
-
 
 /* Chat Messages */
 /* Chat Messages */
@@ -126,7 +136,6 @@ body {
   display: flex;
   gap: 8px; /* Reduced gap */
 }
-
 
 /* Custom Scrollbar */
 .chat-content::-webkit-scrollbar {
@@ -171,7 +180,6 @@ body {
   background-color: #444; /* Darker gray for bot messages */
 }
 
-
 .chat-textbox {
   flex: 1;
   padding: 8px; /* Reduced padding */
@@ -181,7 +189,6 @@ body {
   color: #ffffff;
   font-size: 14px; /* Reduced font size */
 }
-
 
 .send-button {
   background-color: #0d6efd;
@@ -200,7 +207,10 @@ body {
 
 /* Transactions Section Styling */
 .connect-button-container {
+  display: flex;
   margin-bottom: 16px; /* Reduced margin */
+  justify-content: center;
+  align-items: center;
 }
 
 .connect-button {
@@ -210,8 +220,10 @@ body {
   padding: 10px 20px; /* Reduced padding */
   border-radius: 6px; /* Reduced border radius */
   cursor: pointer;
-  font-size: 14px; /* Reduced font size */
+  font-size: 20px; /* Reduced font size */
   transition: all 0.3s ease;
+  justify-content: center;
+  align-items: center;
 }
 
 .connect-button:hover {
@@ -364,7 +376,7 @@ body {
 /* Welcome Message */
 .welcome-message {
   margin: 0;
-  font-size: 14px; /* Reduced font size */
+  font-size: 20px; /* Reduced font size */
   color: #ffffff;
   font-weight: 500;
 }
@@ -374,7 +386,7 @@ body {
   padding: 8px 16px; /* Reduced padding */
   border: none;
   border-radius: 20px; /* Reduced border radius */
-  font-size: 13px; /* Reduced font size */
+  font-size: 20px; /* Reduced font size */
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -418,7 +430,7 @@ body {
 .sidebar-toggle {
   position: fixed;
   right: 0;
-  top: 50%;
+  top: 20%;
   transform: translateY(-50%);
   background-color: #007bff;
   color: white;
@@ -428,7 +440,13 @@ body {
   z-index: 1000;
   border-radius: 8px 0 0 8px;
   opacity: 0.5; /* Make the button semi-transparent when closed */
-  transition: opacity 0.3s ease-in-out, right 0.3s ease-in-out;
+  transition: right 0.45s ease-in-out;
+}
+
+.sidebar-toggle.open {
+  right: 50%; /* Move the button to the right when sidebar is open */
+  border-radius: 0; /* Remove border radius when sidebar is open */
+  transition: right 0.45s ease-in-out;
 }
 
 .sidebar-toggle:hover {
@@ -438,23 +456,23 @@ body {
 /* Chart Sidebar - Right */
 .chart-sidebar {
   position: fixed;
-  right: -300px; /* Hide sidebar by default */
+  right: 0; /* Hide sidebar by default */
   top: 0;
-  width: 300px;
+  width: 0;
   height: 100%;
-  background-color: #D3D3D3;
-  padding: 20px;
+  background-color: #d3d3d3;
   border-left: 1px solid #ddd;
-  transition: right 0.3s ease-in-out;
   z-index: 999;
+  transition: all 0.45s ease-in-out;
 }
 
 .chart-sidebar.open {
   right: 0; /* Show sidebar when open */
+  width: 50%;
+  transition: all 0.45s ease-in-out;
 }
 
 .chart-sidebar h3 {
-  font-size: 16px;
   font-weight: bold;
   margin-bottom: 20px;
   color: black;
