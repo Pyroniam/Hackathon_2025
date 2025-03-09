@@ -227,7 +227,7 @@ const PlaidIntegration = () => {
     <div className={`finance-app ${isSidebarOpen ? "sidebar-open" : ""}`}>
       {/* Chat Section - Left */}
       <div className="chat-section">
-        <h2 className="chat-title">Finance Advisor</h2>
+        <h2 className="chat-title"></h2>
         <div className="chat-content">
           {messages.map((msg, i) => (
             <div
