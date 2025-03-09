@@ -287,7 +287,9 @@ app.post("/api/chat", async (req, res) => {
             {
               parts: [{ text: geminiPrompt }],
             },
-          ],
+          ],generationConfig: {
+            temperature: 0.4, // Set the temperature here
+          },
         },
         {
           headers: {
