@@ -256,7 +256,7 @@ app.post("/api/chat", async (req, res) => {
   if (responseText === "No relevant financial advice available.") {
     try {
       const geminiPrompt = `
-        You are a financial advisor named Profit Prophet. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance. Respond without the use of textile markup language. If the user greets you, act enthusiastic to help. As an introduction speak concisely and very short.
+        You are a financial advisor named Profit Prophet. Only respond with financial advice related to budgeting, saving, investing, managing debt, or general finance. If the user greets you, act enthusiastic to help. As an introduction speak concisely and very short.
 
         The following is a financial query:
         "${query}"

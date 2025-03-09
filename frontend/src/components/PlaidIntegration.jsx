@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { usePlaidLink } from "react-plaid-link";
+import ReactMarkdown from "react-markdown";
 import axios from "axios";
 import {
   Send,
@@ -235,7 +236,10 @@ const PlaidIntegration = () => {
                 msg.sender === "user" ? "user" : "bot"
               }`}
             >
-              <div className="chat-bubble">{msg.text}</div>
+              <div className="chat-bubble">
+              <ReactMarkdown>{msg.text}</ReactMarkdown>
+                
+                </div>
             </div>
           ))}
           {loading && <p className="loading-text">Typing...</p>}
