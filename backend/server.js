@@ -1,4 +1,4 @@
-require("dotenv").config();
+const connectDB = require("./config/mongodb")
 const express = require("express");
 const cors = require("cors");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
@@ -9,6 +9,9 @@ app.use(cors());
 const axios = require("axios");
 const path = require("path");
 require("dotenv").config();
+connectDB();
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
 const plaidClient = new PlaidApi(
   new Configuration({
     basePath: PlaidEnvironments[process.env.PLAID_ENV || "sandbox"],
