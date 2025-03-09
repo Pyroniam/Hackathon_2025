@@ -20,7 +20,25 @@ function App() {
           {accessToken && <AccountInfo accessToken={accessToken} />}
         </>
       ) : (
-        <p>Please log in to access the financial advisor.</p>
+        <div className="main-description">
+          <h1>Welcome to Profit Prophet</h1>
+          <p>
+            Profit Prophet is your AI-powered financial advisor, designed to help you make smarter
+            spending decisions and achieve your financial goals. By analyzing your transactions and
+            income, we provide personalized recommendations on how to budget, save, and invest your
+            money effectively.
+          </p>
+          <p>
+            Log in to connect your bank account and start receiving tailored advice on:
+          </p>
+          <ul>
+            <li>Budgeting strategies</li>
+            <li>Spending recommendations</li>
+            <li>Savings goals</li>
+            <li>Investment opportunities</li>
+          </ul>
+          <p>Take control of your finances today with Profit Prophet!</p>
+        </div>
       )}
     </div>
   );

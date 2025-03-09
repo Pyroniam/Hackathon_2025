@@ -1,5 +1,63 @@
 /* styles.css */
+/* Main Description */
+/* styles.css */
+/* Main Description */
+.main-description {
+  max-width: 800px; /* Limit width for better readability */
+  margin: 40px auto; /* Center the description */
+  padding: 20px;
+  background-color: #262626; /* Dark gray background */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #444; /* Subtle border for separation */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  color: #ffffff; /* White text */
+  text-align: left; /* Align text to the left */
+}
+
+.main-description h1 {
+  font-size: 28px; /* Larger font size for heading */
+  font-weight: 600; /* Bold font weight */
+  margin-bottom: 20px; /* Space below heading */
+  color: #0d6efd; /* Blue color for emphasis */
+  text-align: center; /* Center-align the heading */
+}
+
+.main-description p {
+  font-size: 16px; /* Standard font size */
+  line-height: 1.6; /* Improved readability */
+  margin-bottom: 16px; /* Space between paragraphs */
+}
+
+.main-description ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding: 0;
+  margin: 20px 0; /* Space above and below the list */
+}
+
+.main-description ul li {
+  font-size: 16px; /* Standard font size */
+  margin-bottom: 10px; /* Space between list items */
+  padding-left: 24px; /* Space for custom bullet points */
+  position: relative;
+}
+
+.main-description ul li::before {
+  content: "•"; /* Add custom bullet point */
+  color: #0d6efd; /* Blue color for bullet points */
+  font-size: 20px; /* Larger bullet points */
+  position: absolute;
+  left: 0; /* Align bullet points to the left */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+}
+
+.main-description p:last-child {
+  margin-bottom: 0; /* Remove margin for the last paragraph */
+}
+/* styles.css */
 /* Base Styles */
+
+
 body {
   background-color: #333;
   color: #ffffff;
@@ -34,6 +92,7 @@ body {
   background-color: #262626; /* Dark gray */
   border-radius: 10px; /* Reduced border radius */
   padding: 16px; /* Reduced padding */
+  padding-top: 2px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border: 1px solid #333; /* Subtle border for separation */
   display: flex;
@@ -284,6 +343,15 @@ body {
   padding: 16px; /* Reduced padding */
   background-color: #262626; /* Dark gray background */
   border-bottom: 1px solid #333; /* Subtle border for separation */
+}
+
+/* Website Name */
+.website-name {
+  font-size: 44px; /* Larger font size for emphasis */
+  font-weight: 600; /* Bold font weight */
+  color: #ffffff; /* White text */
+  margin-right: auto;
+  margin-left: 10px; /* Push auth buttons to the right */
 }
 
 /* Signed-In Container */

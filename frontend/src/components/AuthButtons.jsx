@@ -8,6 +8,10 @@ const AuthButtons = () => {
 
   return (
     <div className="auth-buttons-container">
+      {/* Website Name */}
+      <div className="website-name">Profit Prophet</div>
+
+      {/* Auth Buttons */}
       {isSignedIn ? (
         <div className="signed-in-container">
           <p className="welcome-message">Welcome, {user.firstName}!</p>
