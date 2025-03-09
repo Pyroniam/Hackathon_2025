@@ -68,46 +68,53 @@ const PlaidIntegration = () => {
     }
   };
 
-  // Helper function to group transactions by month and calculate total spending
-  const groupTransactionsByMonth = () => {
+  // Helper function to group transactions by month and category
+  const groupTransactionsByMonthAndCategory = () => {
     const grouped = {};
 
     transactions.forEach((transaction) => {
-      if (!transaction.date || !transaction.amount) return;
+      if (!transaction.date || !transaction.amount || !transaction.category) return;
 
       const date = new Date(transaction.date);
       if (isNaN(date)) return;
 
       const year = date.getFullYear().toString();
       const month = date.toLocaleString("default", { month: "short" });
+      const category = transaction.category[transaction.category.length - 1]; // Use the most specific category
 
       if (!grouped[year]) {
-        grouped[year] = [];
+        grouped[year] = {};
       }
 
-      const monthData = grouped[year].find((m) => m.month === month);
-      if (monthData) {
-        monthData.transactions.push(transaction);
-        monthData.total += Number(transaction.amount);
-      } else {
-        grouped[year].push({
-          month,
-          total: Number(transaction.amount),
-          transactions: [transaction],
-        });
+      if (!grouped[year][month]) {
+        grouped[year][month] = {};
       }
+
+      if (!grouped[year][month][category]) {
+        grouped[year][month][category] = 0;
+      }
+
+      grouped[year][month][category] += Math.abs(Number(transaction.amount)); // Use absolute value for spending
     });
 
     return grouped;
   };
 
-  const groupedTransactions = groupTransactionsByMonth();
+  const groupedTransactions = groupTransactionsByMonthAndCategory();
 
-  // Prepare data for the bar chart
+  // Prepare data for the monthly spending chart
   const chartData = Object.keys(groupedTransactions).flatMap((year) =>
-    groupedTransactions[year].map((monthData) => ({
-      name: `${monthData.month} ${year}`,
-      total: Math.abs(monthData.total), // Use absolute value for spending
+    Object.keys(groupedTransactions[year]).map((month) => ({
+      name: `${month} ${year}`,
+      total: Object.values(groupedTransactions[year][month]).reduce((sum, amount) => sum + amount, 0),
+    }))
+  );
+
+  // Prepare data for the category chart
+  const categoryChartData = Object.keys(groupedTransactions).flatMap((year) =>
+    Object.keys(groupedTransactions[year]).map((month) => ({
+      name: `${month} ${year}`,
+      ...groupedTransactions[year][month], // Spread category totals
     }))
   );
 
@@ -218,30 +225,28 @@ const PlaidIntegration = () => {
             {Object.keys(groupedTransactions).map((year) => (
               <div key={year}>
                 <h3 className="year-header">{year}</h3>
-                {groupedTransactions[year].map((monthData, index) => (
+                {Object.keys(groupedTransactions[year]).map((month, index) => (
                   <div key={index} className="month-transactions">
                     <div className="month-header" onClick={() => 
                       setExpandedMonths((prev) => ({
                         ...prev,
-                        [monthData.month]: !prev[monthData.month],
+                        [month]: !prev[month],
                       }))
                     }>
-                      <span>{monthData.month}</span>
-                      <span>Total: ${monthData.total.toFixed(2)}</span>
+                      <span>{month}</span>
+                      <span>Total: ${Object.values(groupedTransactions[year][month]).reduce((sum, amount) => sum + amount, 0).toFixed(2)}</span>
                     </div>
 
-                    {expandedMonths[monthData.month] && (
+                    {expandedMonths[month] && (
                       <div className="transaction-list">
                         <div className="transaction-row">
-                          <div>Name</div>
+                          <div>Category</div>
                           <div>Amount</div>
-                          <div>Date</div>
                         </div>
-                        {getSortedTransactions(monthData.transactions).map((transaction, tIndex) => (
+                        {Object.keys(groupedTransactions[year][month]).map((category, tIndex) => (
                           <div key={tIndex} className="transaction-row">
-                            <div>{transaction.name || "Unknown Transaction"}</div>
-                            <div>${(transaction.amount || 0).toFixed(2)}</div>
-                            <div>{transaction.date ? new Date(transaction.date).toDateString() : "Invalid Date"}</div>
+                            <div>{category}</div>
+                            <div>${groupedTransactions[year][month][category].toFixed(2)}</div>
                           </div>
                         ))}
                       </div>
@@ -256,11 +261,11 @@ const PlaidIntegration = () => {
 
       {/* Sidebar Toggle Button */}
       <button
-  className="sidebar-toggle"
-  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
->
-  {isSidebarOpen ? <ArrowRight size={20} /> : <ArrowLeft size={20} />}
-</button>
+        className="sidebar-toggle"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? <ArrowRight size={20} /> : <ArrowLeft size={20} />}
+      </button>
 
       {/* Chart Sidebar - Right */}
       <div className={`chart-sidebar ${isSidebarOpen ? "open" : ""}`}>
@@ -277,6 +282,30 @@ const PlaidIntegration = () => {
           </ResponsiveContainer>
         ) : (
           <p>No transaction data available.</p>
+        )}
+
+        <h3>Spending by Category</h3>
+        {accessToken && categoryChartData.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={categoryChartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              {Object.keys(categoryChartData[0])
+                .filter((key) => key !== "name")
+                .map((category, index) => (
+                  <Bar
+                    key={index}
+                    dataKey={category}
+                    stackId="a"
+                    fill={`#${Math.floor(Math.random() * 16777215).toString(16)}`} // Random color for each category
+                  />
+                ))}
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <p>No category data available.</p>
         )}
       </div>
     </div>
